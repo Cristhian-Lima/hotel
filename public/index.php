@@ -3,8 +3,8 @@
 use Controllers\HomeController;
 use Controllers\LoginController;
 use Http\App;
-use Http\Request;
 use Http\Response;
+use Tools\HashTool;
 
 require __DIR__ . '/../app/settings.php';
 require __DIR__ . '/../app/autoload.php';
@@ -15,16 +15,13 @@ $app = new App($basePath);
 
 $app->get('/', HomeController::class);
 $app->get('/login', [LoginController::class, 'login']);
+$app->post('/login', [LoginController::class, 'auth']);
 
-$app->post('/register', function (Request $req, Response $res) {
-  $username = $req->getParam('username');
-  $password = $req->getParam('password');
-  $result = [
-    "name" => $username,
-    "pass" => $password
-  ];
-  $res->getBody()->write(json_encode($result));
-  return $res->withHeader('Content-Type', 'application/json');
+$app->get('/hash', function ($req, Response $response) {
+  $pass = 'meli';
+  $passHass = HashTool::hash($pass);
+  $response->getBody()->write(json_encode(["pass" => $pass, "pass_hash" => $passHass]));
+  return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->run();
