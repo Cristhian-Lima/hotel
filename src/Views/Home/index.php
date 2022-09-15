@@ -10,6 +10,7 @@
 <body>
 
   <h1>Home page hotel</h1>
+  <h2>Hola <?= $this->get('name') ?></h2>
 
 </body>
 

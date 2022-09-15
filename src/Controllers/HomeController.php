@@ -13,11 +13,9 @@ class HomeController extends Controller
 {
   public function __invoke(Request $request, Response $response)
   {
-    $this->loadView('Home');
-    $headers = $request->getHeaders();
-    $response->getBody()->write(json_encode($headers));
+    $this->render('Home/index');
+
     return $response
-      ->withStatusCode(200)
-      ->withHeader('Content-Type', 'application/json');
+      ->withStatusCode(200);
   }
 }

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Http;
 
+use Exception;
+use Exception\HttpRequestException;
+use State\StatusCode;
+
 /**
  * Class Request
  * @author Felicidad Hilari
@@ -30,6 +34,15 @@ class Request
    */
   protected $basePath;
 
+  /**
+   * @var array<string>
+   */
+  private $params;
+
+  /**
+   * @var array<string>
+   */
+  private $queryParams;
 
   public function __construct(string $basePath = '')
   {
@@ -37,6 +50,79 @@ class Request
     $this->setMethod($_SERVER['REQUEST_METHOD']);
     $this->setUri($_SERVER['REQUEST_URI']);
     $this->setHeaders(getallheaders());
+    $this->setParams($_POST);
+  }
+
+  /**
+   * Getter for queryParam
+   *
+   * @return string
+   */
+  public function getQueryParam(string $queryParamName): string
+  {
+    if (!array_key_exists($queryParamName, $this->queryParams))
+      throw new HttpRequestException("El parametro '$queryParamName' no existe", StatusCode::BAD_REQUEST);
+
+    return $this->queryParam[$queryParamName];
+  }
+
+  /**
+   * Obtiene el valor de queryParams
+   *
+   * @return array<string>
+   */
+  public function getQueryParams()
+  {
+    return $this->queryParams;
+  }
+
+  /**
+   * Establece el valor de queryParams
+   *
+   * @param array<string> $queryParams
+   *
+   * @return Request
+   */
+  public function setQueryParams(array $queryParams)
+  {
+    $this->queryParams = $queryParams;
+    return $this;
+  }
+
+  /**
+   * Getter for param
+   *
+   * @return string
+   */
+  public function getParam(string $paramName): ?string
+  {
+    if (!array_key_exists($paramName, $this->params))
+      throw new HttpRequestException("El nombre del parametro '$paramName' no existe", StatusCode::BAD_REQUEST);
+
+    return $this->params[$paramName];
+  }
+
+  /**
+   * Obtiene el valor de params
+   *
+   * @return array
+   */
+  public function getParams()
+  {
+    return $this->params;
+  }
+
+  /**
+   * Establece el valor de params
+   *
+   * @param array $params
+   *
+   * @return Request
+   */
+  public function setParams(array $params)
+  {
+    $this->params = $params;
+    return $this;
   }
 
   /**
