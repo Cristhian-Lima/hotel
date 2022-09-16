@@ -8,16 +8,22 @@
 </head>
 
 <body>
-  <form action="<?= $this->get('basepath') . '/login' ?>" method="post">
-    <label for="username">Username</label>
-    <input type="text" name="username" placeholder="Username">
-    <br>
-    <label for="password">Password</label>
-    <input type="password" name="password" placeholder="Password">
-    <br>
+  <div class="container">
+    <form id="form-login" action="<?= $this->get('basepath') . '/login' ?>" method="post">
+      <div class="message-container">
+      </div>
+      <div class="email">
+        <label for="email">Email</label>
+        <input type="email" name="email" placeholder="Email">
+      </div>
+      <div class="password">
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Password">
+      </div>
 
-    <input type="submit" value="Login">
-  </form>
+      <input type="submit" value="Login">
+    </form>
+  </div>
 </body>
 
 </html>

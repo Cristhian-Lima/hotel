@@ -17,6 +17,40 @@ class View
   private $data;
 
   /**
+   * @var string
+   */
+  private $basePath;
+
+  public function __construct(string $basePath = '')
+  {
+    $this->data = [];
+    $this->setBasePath($basePath);
+  }
+
+  /**
+   * Obtiene el valor de basePath
+   *
+   * @return string
+   */
+  public function getBasePath()
+  {
+    return $this->basePath;
+  }
+
+  /**
+   * Establece el valor de basePath
+   *
+   * @param string $basePath
+   *
+   * @return View
+   */
+  public function setBasePath(string $basePath)
+  {
+    $this->basePath = $basePath;
+    return $this;
+  }
+
+  /**
    * Getter for data
    *
    * @return string

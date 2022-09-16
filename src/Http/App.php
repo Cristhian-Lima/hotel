@@ -24,23 +24,29 @@ class App
    */
   private $response;
 
+  /** 
+   * @var Router 
+   */
+  private $router;
 
   /**
    * @var string
    */
   protected $basePath;
 
-  /** 
-   * @var Router 
+  /**
+   * @var ErrorManager
    */
-  private $router;
+  private $errorManager;
+
 
 
   public function __construct(string $basePath = '')
   {
-    $this->router   = new Router();
-    $this->request  = new Request($basePath);
-    $this->response = new Response();
+    $this->router       = new Router();
+    $this->request      = new Request($basePath);
+    $this->response     = new Response();
+    $this->errorManager = new ErrorManager();
 
     $this->setbasePath($basePath);
   }
@@ -165,6 +171,9 @@ class App
         echo $response->getBody()->getContentBody();
       }
     } catch (Exception $e) {
+      $responseError = call_user_func($this->errorManager, $e, $this->getResponse());
+      $responseError->send();
+      echo $responseError->getBody()->getContentBody();
       error_log($e->getMessage());
     }
   }

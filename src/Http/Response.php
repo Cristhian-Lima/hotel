@@ -103,6 +103,10 @@ class Response
   public function send()
   {
     foreach ($this->getAllHeaders() as $headerName => $headerValue) {
+      if ($headerName === 'Location') {
+        header("$headerName: $headerValue");
+        die();
+      }
       header("$headerName: $headerValue");
     }
     http_response_code($this->getStatusCode());

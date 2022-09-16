@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Http\Request;
 use Http\Response;
+use State\StatusCode;
 
 /**
  * Class HomeController
@@ -11,11 +12,16 @@ use Http\Response;
  */
 class HomeController extends Controller
 {
+  public function __construct()
+  {
+    parent::__construct();
+  }
   public function __invoke(Request $request, Response $response)
   {
-    $this->render('Home/index');
+    $this->view->setBasePath($request->getBasePath());
 
+    $this->render('Home/index');
     return $response
-      ->withStatusCode(200);
+      ->withStatusCode(StatusCode::OK);
   }
 }

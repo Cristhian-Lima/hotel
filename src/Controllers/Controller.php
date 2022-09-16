@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Models\CrudInterface;
+use Models\Model;
 use Views\View;
 
 /**
@@ -11,9 +13,14 @@ use Views\View;
 class Controller
 {
   /**
+   * @var CrudInterface
+   */
+  protected $model;
+
+  /**
    * @var View
    */
-  private $view;
+  protected $view;
 
   public function __construct()
   {
