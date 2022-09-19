@@ -10,7 +10,7 @@ $connection = $database->connect();
 
 try {
   succesMessage("[~] Reinstalando la base de datos");
-  $connection->exec("DROP DATABASE " . DB_NAME);
+  $connection->exec("DROP DATABASE IF EXISTS " . DB_NAME);
 
   succesMessage("[~] Creando base de datos");
   $connection->exec("CREATE DATABASE " . DB_NAME);
