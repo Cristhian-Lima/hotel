@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Http;
 
 use Exception;
-use Exception\NotFoundException;
 use State\StatusCode;
 
 /**
@@ -132,43 +131,59 @@ class App
     $this->router->add($route, 'POST', $callback);
   }
 
+  private function send($callback, $args)
+  {
+    $response = call_user_func($callback, $this->request, $this->response, $args);
+
+    $response->send();
+    echo $response->getBody()->getContentBody();
+  }
+
+  private function getArgs(Route $route)
+  {
+    $res = preg_grep('/^\{[a-z]+\}$/', $route->getUriArray());
+    $uri = $this->request->getUriArray();
+    $res = array_map(function ($arg) {
+      $arg = trim($arg, '{');
+      $arg = trim($arg, '}');
+      return $arg;
+    }, $res);
+
+    $arr = [];
+    foreach ($res as $key => $arg) {
+      $arr[$arg] = $uri[$key];
+    }
+    return $arr;
+  }
+
   public function run()
   {
     try {
-
-      $uri = $this->request->getUri();
+      $uriArray = $this->request->getUriArray();
       $method = $this->request->getMethod();
 
-      $route = $this->router->getRoute($uri, $method);
+      $route = $this->router->getRoute($uriArray, $method);
 
-      $response = $this->getResponse();
-      if (is_callable($route->getCallback())) {
-        $response = call_user_func($route->getCallback(), $this->request, $this->response);
-
-        $response->send();
-        echo $response->getBody()->getContentBody();
-      } elseif (is_array($route->getCallback())) {
+      if (is_array($route->getCallback())) {
         [$className, $methodName] = $route->getCallback();
 
         if (!class_exists($className)) {
-          throw new Exception('Class Not Founc', 404);
+          throw new Exception('Class Not Found', StatusCode::NOT_FOUND);
         }
         if (!method_exists($className, $methodName)) {
-          throw new Exception('Method Not Founc', 404);
+          throw new Exception('Method Not Found', StatusCode::NOT_FOUND);
         }
 
         $controller = new $className();
-        $response = call_user_func([$controller, $methodName], $this->request, $this->response);
 
-        $response->send();
-        echo $response->getBody()->getContentBody();
+        $this->send([$controller, $methodName], $this->getArgs($route));
+      } else if (is_callable($route->getCallback())) {
+        $this->send($route->getCallback(), $this->getArgs($route));
       } elseif (class_exists($route->getCallback())) {
         $controller = $route->getCallback();
         $controller = new $controller();
-        $response = call_user_func($controller, $this->request, $this->response);
 
-        $response->send();
-        echo $response->getBody()->getContentBody();
+        $this->send($controller, $this->getArgs($route));
       }
     } catch (Exception $e) {
       $responseError = call_user_func($this->errorManager, $e, $this->getResponse());

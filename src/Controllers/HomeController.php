@@ -20,6 +20,7 @@ class HomeController extends Controller
   {
     $this->view->setBasePath($request->getBasePath());
 
+    $response->getBody()->write(json_encode($request->getUriArray()));
     $this->render('Home/index');
     return $response
       ->withStatusCode(StatusCode::OK);

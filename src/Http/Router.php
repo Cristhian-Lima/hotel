@@ -42,7 +42,7 @@ class Router
    *
    * @return ?Route
    */
-  public function getRoute(string $uri, string $method): ?Route
+  public function getRoute(array $uri, string $method): ?Route
   {
     foreach ($this->routes as $route) {
       if ($route->compare($uri, $method)) {
@@ -52,5 +52,19 @@ class Router
 
     /* en caso de no coincidir con alguna ruta, lanza una excepcion */
     throw new NotFoundException('La ruta no existe', StatusCode::NOT_FOUND);
+  }
+
+  /**
+   * Getter for routes
+   *
+   * @return array
+   */
+  public function getRoutesName(): array
+  {
+    $routesName = array_map(function (Route $route) {
+      return $route->getUriArray();
+    }, $this->routes);
+
+    return $routesName;
   }
 }

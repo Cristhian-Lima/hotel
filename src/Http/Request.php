@@ -174,6 +174,16 @@ class Request
   /**
    * Getter for uri
    *
+   * @return array
+   */
+  public function getUriArray(): array
+  {
+    return explode('/', trim($this->uri, '/'));
+  }
+
+  /**
+   * Getter for uri
+   *
    * @return string
    */
   public function getUri()

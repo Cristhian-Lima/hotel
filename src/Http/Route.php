@@ -78,6 +78,11 @@ class Route
     return $this;
   }
 
+  public function getUriArray()
+  {
+    return explode('/', trim($this->uri, '/'));
+  }
+
   /**
    * Obtiene el valor de uri
    *
@@ -105,13 +110,24 @@ class Route
    * Compara la url y el metodo
    * si es igual a los atributos del objetos devuelve true
    *
-   * @param string $uri
+   * @param array $uri
    * @param string $method
    *
    * @return bool
    */
-  public function compare(string $uri, string $method): bool
+  public function compare(array $uri, string $method): bool
   {
-    return $this->getUri() === $uri && $this->getMethod() === strtoupper($method);
+    if (count($this->getUriArray()) !== count($uri))
+      return false;
+
+    for ($i = 0; $i < count($uri); $i++) {
+      if ($this->getUriArray()[$i] !== $uri[$i]) {
+        if (preg_match('/^\{[a-z]+\}$/', $this->getUriArray()[$i]))
+          break;
+        return false;
+      }
+    }
+
+    return $this->getMethod() === $method;
   }
 }
