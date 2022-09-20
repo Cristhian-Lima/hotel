@@ -20,9 +20,9 @@ class LoginModel extends Model
   /**
    * devuelve un objeto de tipo CLiente si encuentra al cliente
    *
-   * @return Cliente
+   * @return Cliente | bool
    */
-  public function login(string $email): Cliente
+  public function login(string $email): Cliente | bool
   {
     $resultOfQuery = $this->selectAllFromWhere(self::ENTITIE_LOGIN, "CORREO = :email");
     $resultOfQuery->execute(["email" => $email]);

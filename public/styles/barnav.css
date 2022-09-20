@@ -1,0 +1,41 @@
+.root {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
+header nav.bar{
+    display: flex;
+    justify-content: space-between;
+    background: #222;
+    color: #fff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+header .bar .bar-container{
+    padding: 8px;
+}
+
+header .bar .bar-container .link{
+    color: #fff;
+    font-size: 1.1em;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 10px 0 10px ;
+    transition: .3s;
+    border-bottom: 1px solid transparent;
+}
+header .bar .bar-container .link:hover {
+    transform: scale(1.1, 1.1);
+    border-bottom: 1px solid #cc6600;
+}
+
+footer .footer{
+    display: flex;
+    justify-content: center;
+    background: #222;
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 2px -5px 8px rgba(0, 0, 0, 0.5);
+}
+

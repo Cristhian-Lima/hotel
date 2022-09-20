@@ -1,0 +1,30 @@
+.container {
+    width: 100%;
+    display: flex;
+    align-content: center;
+}
+.container .box {
+    background-color: #fff;
+    margin: auto;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    max-width: 1000px;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 1px 5px 10px  rgba(0, 0, 0, 0.3);
+}
+.container .box .row{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px;
+    border-bottom: 2px solid #222;
+}
+
+.container .box .row-title {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px;
+    /* border-bottom: 2px solid #222; */
+}
+

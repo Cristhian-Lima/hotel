@@ -50,6 +50,11 @@ class View
     return $this;
   }
 
+  public function has(string $name)
+  {
+    return isset($this->data[$name]);
+  }
+
   /**
    * Getter for data
    *

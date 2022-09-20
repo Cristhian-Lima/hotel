@@ -38,6 +38,10 @@ class App
    */
   private $errorManager;
 
+  /**
+   * @var Session
+   */
+  private $session;
 
 
   public function __construct(string $basePath = '')
@@ -46,6 +50,7 @@ class App
     $this->request      = new Request($basePath);
     $this->response     = new Response();
     $this->errorManager = new ErrorManager();
+    $this->session      = new Session();
 
     $this->setbasePath($basePath);
   }
@@ -174,14 +179,14 @@ class App
           throw new Exception('Method Not Found', StatusCode::NOT_FOUND);
         }
 
-        $controller = new $className();
+        $controller = new $className($this->session);
 
         $this->send([$controller, $methodName], $this->getArgs($route));
       } else if (is_callable($route->getCallback())) {
         $this->send($route->getCallback(), $this->getArgs($route));
       } elseif (class_exists($route->getCallback())) {
         $controller = $route->getCallback();
-        $controller = new $controller();
+        $controller = new $controller($this->session);
 
         $this->send($controller, $this->getArgs($route));
       }

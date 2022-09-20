@@ -51,6 +51,7 @@ class Request
     $this->setUri($_SERVER['REQUEST_URI']);
     $this->setHeaders(getallheaders());
     $this->setParams($_POST);
+    $this->setQueryParams($_GET);
   }
 
   /**
@@ -63,7 +64,7 @@ class Request
     if (!array_key_exists($queryParamName, $this->queryParams))
       throw new HttpRequestException("El parametro '$queryParamName' no existe", StatusCode::BAD_REQUEST);
 
-    return $this->queryParam[$queryParamName];
+    return $this->queryParams[$queryParamName];
   }
 
   /**
@@ -178,7 +179,8 @@ class Request
    */
   public function getUriArray(): array
   {
-    return explode('/', trim($this->uri, '/'));
+    [$uri] = explode('?', $this->uri);
+    return explode('/', trim($uri, '/'));
   }
 
   /**

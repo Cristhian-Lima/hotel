@@ -8,6 +8,7 @@ use Entities\Cliente;
 use Exception\LoginException;
 use Http\Request;
 use Http\Response;
+use Http\Session;
 use LogicException;
 use Models\LoginModel;
 use State\StatusCode;
@@ -24,38 +25,53 @@ class LoginController extends Controller
    */
   private $loginModel;
 
-  public function __construct()
+  /**
+   * @var Session
+   */
+  private $session;
+
+
+  public function __construct(Session $session)
   {
     parent::__construct();
     $this->loginModel = new LoginModel();
+    $this->session = $session;
   }
   public function login(Request $request, Response $response): Response
   {
-    $this->render('Login/index', ["basepath" => $request->getBasePath()]);
+    $this->view->setBasePath($request->getBasePath());
+    $this->render('Login/index');
     return $response->withStatusCode(StatusCode::OK);
+  }
+
+  public function logout(Request $request, Response $response): Response
+  {
+    $this->session->closeSession();
+    return $response->withHeader('Location', SERVER_HOST . $request->getBasePath());
   }
 
   public function auth(Request $request, Response $response): Response
   {
-    $email = $request->getParam('email');
-    $password = $request->getParam('password');
+    try {
 
-    $cliente = $this->loginModel->login($email);
+      $email = $request->getParam('email');
+      $password = $request->getParam('password');
 
-    if (is_null($cliente))
-      throw new LogicException('Correo electronico incorrecto', StatusCode::BAD_REQUEST);
+      $cliente = $this->loginModel->login($email);
 
-    if (!HashTool::verify($password, $cliente->getPassword()))
-      throw new LogicException('Contraseña incorrecta', StatusCode::BAD_REQUEST);
+      if (!$cliente)
+        throw new LogicException('Correo electronico incorrecto', StatusCode::BAD_REQUEST);
 
-    $res = [
-      "code" => StatusCode::OK,
-      "message" => 'Logeado correctamente'
-    ];
-    $response->getBody()->write(json_encode($res));
-    return $response
-      ->withStatusCode(StatusCode::OK)
-      ->withHeader('Content-Type', 'application/json');
+      if (!HashTool::verify($password, $cliente->getPassword()))
+        throw new LogicException('Contraseña incorrecta', StatusCode::BAD_REQUEST);
+
+      $this->session->setCurrentClient($cliente);
+    } catch (\Exception $e) {
+      $this->view->setBasePath($request->getBasePath());
+      $this->render('Login/index', ["message" => $e->getMessage()]);
+      return $response;
+    }
+    return $response->withHeader('Location', SERVER_HOST . $request->getBasePath());
   }
 
   public function register(Request $request, Response $response): Response
@@ -85,6 +101,6 @@ class LoginController extends Controller
 
     return $response
       ->withStatusCode(StatusCode::RESOURCE_CREATED)
-      ->withHeader('Location', SERVER_HOST . $request->getBasePath());
+      ->withHeader('Location', SERVER_HOST . $request->getBasePath() . '/login');
   }
 }

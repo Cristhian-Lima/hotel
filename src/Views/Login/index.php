@@ -1,29 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <?php require VIEWS . 'Templates/Head.php'; ?>
+  <link rel="stylesheet" href=" <?= SERVER_HOST . $this->getBasePath() . '/styles/forms.css' ?>">
 </head>
 
-<body>
+<body style="background: url(<?= SERVER_HOST . $this->getBasePath() . '/img/bg-login.jpg' ?>)">
   <div class="container">
-    <form id="form-login" action="<?= $this->get('basepath') . '/login' ?>" method="post">
-      <div class="message-container">
+    <div class="form">
+      <div class="row-title">
+        <h2 class="title">Log In</h2>
       </div>
-      <div class="email">
-        <label for="email">Email</label>
-        <input type="email" name="email" placeholder="Email">
-      </div>
-      <div class="password">
-        <label for="password">Password</label>
-        <input type="password" name="password" placeholder="Password">
-      </div>
-
-      <input type="submit" value="Login">
-    </form>
+      <form id="form-login" action="<?= SERVER_HOST . $this->getBasePath() . '/login' ?>" method="post">
+        <?php if ($this->has('message')) : ?>
+          <div class=" danger">
+            <p> <?= $this->get('message') ?></p>
+          </div>
+        <?php endif ?>
+        <div class="row">
+          <label for="email">Email</label>
+          <input autocomplete="off" required type="email" name="email" placeholder="Email">
+        </div>
+        <div class="row">
+          <label for="password">Password</label>
+          <div class="pass">
+            <input class="password" required type="password" name="password" placeholder="Password">
+            <span><i class="icono fas fa-eye"></i></span>
+          </div>
+        </div>
+        <div class="row">
+          <input class="btn" type="submit" value="Login">
+        </div>
+        <div class="row">
+          <div class="links">
+            <span>¿Nuevo? <a class="link" href=" <?= SERVER_HOST . $this->getBasePath() . '/register' ?>">Registrate</a></span>
+            <a href="<?= SERVER_HOST . $this->getBasePath() ?>" class="link">Inicio</a>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
+  <script src=" <?= SERVER_HOST . $this->getBasePath() . '/js/showPassword.js' ?>"></script>
 </body>
 
 </html>
