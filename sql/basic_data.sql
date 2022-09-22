@@ -9,27 +9,27 @@ VALUES
     ('8967567', 'Jhonael', 'Romania', 'Quispe', '76544320');
 -- habitaciones
 INSERT INTO HABITACION
-(NUMERO, PISO, TIPO_HABITACION, DESCRIPCION)
+(NUMERO, PISO, TIPO_DISPONIBILIDAD, TIPO_HABITACION, DESCRIPCION)
 VALUES
-    ('1', 1, 'Individual', 'Habitacion estandar para una persona.'),
-    ('2', 1, 'Individual', 'Habitacion estandar para una persona.'),
-    ('3', 2, 'Doble', 'Habitacion estandar para dos persona.'),
-    ('4', 2, 'Doble', 'Habitacion estandar para dos persona.'),
-    ('5', 3, 'Familiar', 'Habitacion con todo lo necesario para una estadia familiar'),
-    ('6', 3, 'Familiar', 'Habitacion con todo lo necesario para una estadia familiar'),
-    ('7', 4, 'Presidencial', 'Habitacion para satisfacer las necesidades del cliente.'),
-    ('8', 4, 'Presidencial', 'Habitacion para satisfacer las necesidades del cliente.'),
-    ('9', 5, 'VIP', 'Habitacion con muchos requerimientos VIP.'),
-    ('10', 5, 'VIP', 'Habitacion con muchos requerimientos VIP.');
+    ('1', 1, 'RESERVA', 'Individual', 'Habitacion estandar para una persona.'),
+    ('2', 1, NULL, 'Individual', 'Habitacion estandar para una persona.'),
+    ('3', 2, NULL, 'Doble', 'Habitacion estandar para dos persona.'),
+    ('4', 2, 'OCUPADO', 'Doble', 'Habitacion estandar para dos persona.'),
+    ('5', 3, NULL, 'Familiar', 'Habitacion con todo lo necesario para una estadia familiar'),
+    ('6', 3, 'RESERVA', 'Familiar', 'Habitacion con todo lo necesario para una estadia familiar'),
+    ('7', 4, NULL, 'Presidencial', 'Habitacion para satisfacer las necesidades del cliente.'),
+    ('8', 4, NULL, 'Presidencial', 'Habitacion para satisfacer las necesidades del cliente.'),
+    ('9', 5, 'OCUPADO', 'VIP', 'Habitacion con muchos requerimientos VIP.'),
+    ('10', 5, NULL, 'VIP', 'Habitacion con muchos requerimientos VIP.');
 
 -- reservas
 INSERT INTO RESERVA
-    (COD_CLIENTE, FECHA_INICIO, FECHA_FINAL, FECHA_RESERVA, COD_EMP)
+    (COD_CLIENTE,COD_HABITACION, FECHA_INICIO, FECHA_FINAL, FECHA_RESERVA, COD_EMP)
 VALUES
-    (1, '2022-09-15', '2022-09-16', '2022-09-10', 1),
-    (1, '2022-10-15', '2022-09-16', '2022-09-10', 1),
-    (1, '2022-05-23', '2022-05-25', '2022-09-10', 1),
-    (1, '2022-09-05', '2022-09-16', '2022-09-10', 1),
-    (2, '2022-10-21', '2022-10-22', '2022-09-10', 1),
-    (1, '2022-09-15', '2022-09-16', '2022-09-10', 1);
+    (1, 2, '2022-09-15', '2022-09-16', '2022-09-10', 1),
+    (1, 3, '2022-10-15', '2022-09-16', '2022-09-10', 1),
+    (1, 2, '2022-05-23', '2022-05-25', '2022-09-10', 1),
+    (1, 2, '2022-09-05', '2022-09-16', '2022-09-10', 1),
+    (2, 3, '2022-10-21', '2022-10-22', '2022-09-10', 1),
+    (1, 6, '2022-09-15', '2022-09-16', '2022-09-10', 1);
 

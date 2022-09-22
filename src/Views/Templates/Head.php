@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="<?= SERVER_HOST . $this->getBasePath() . '/styles/barnav.css' ?>">
 <link rel="stylesheet" href="<?= SERVER_HOST . $this->getBasePath() . '/styles/containers.css' ?>">
 <link rel="stylesheet" href="<?= SERVER_HOST . $this->getBasePath() . '/styles/botones.css' ?>">
+<link rel="stylesheet" href="<?= SERVER_HOST . $this->getBasePath() . '/styles/tables.css' ?>">
 <script src="https://kit.fontawesome.com/4006e0b850.js" crossorigin="anonymous"></script>
 
 <title>Hotel</title>
