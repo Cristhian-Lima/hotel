@@ -27,5 +27,7 @@ $app->get('/habitaciones', [HabitacionController::class, 'getAll']);
 $app->get('/clientes', [ClienteController::class, 'getAll']);
 
 $app->get('/perfil', [PerfilController::class, 'perfil']);
+$app->get('/perfil/edit', [PerfilController::class, 'edit']);
+$app->post('/perfil/edit', [PerfilController::class, 'update']);
 
 $app->run();

@@ -31,4 +31,32 @@ class ClienteModel extends Model implements CrudInterface
 
     return $resultOfQuery->fetchObject(Cliente::class);
   }
+
+  public function update(Cliente $cliente): bool
+  {
+    $connection = $this->database->connect();
+    $query = "UPDATE CLIENTE SET
+        CARNET = :carnet,
+        CORREO = :correo,
+        PASSWORD = :password,
+        NOMBRES = :nombres,
+        PATERNO = :paterno,
+        MATERNO = :materno,
+        TELEFONO = :telefono,
+        NACIONALIDAD = :nacionalidad
+      WHERE CODIGO = :codigo";
+    $prepare = $connection->prepare($query);
+    $dataClient = [
+      "carnet" => $cliente->getCarnet(),
+      "correo" => $cliente->getCorreo(),
+      "password" => $cliente->getPassword(),
+      "nombres" => $cliente->getNombres(),
+      "paterno" => $cliente->getPaterno(),
+      "materno" => $cliente->getMaterno(),
+      "telefono" => $cliente->getTelefono(),
+      "nacionalidad" => $cliente->getNacionalidad(),
+      "codigo" => $cliente->getId()
+    ];
+    return $prepare->execute($dataClient);
+  }
 }
