@@ -3,7 +3,7 @@
 ## Usuario y/o Cliente
 - Fulano
   - fulanito@gmail.com
-  - 12345;
+  - 12345
 - Melgarejo
   - melgarejo@gmail.com
-  - meli
+  - 12345
