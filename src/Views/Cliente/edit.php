@@ -53,6 +53,7 @@
             <input autocomplete="off" required type="text" name="nacionalidad" id="nacionalidad" value="<?= $cliente->getNacionalidad() ?>">
           </div>
           <div class="row">
+            <a href=" <?= SERVER_HOST . $this->getBasePath() . '/perfil' ?>" class="btn btn-succes">Cancelar</a>
             <input class="btn" type="submit" value="Guardar">
           </div>
         </form>

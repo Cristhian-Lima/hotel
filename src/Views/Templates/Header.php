@@ -13,8 +13,8 @@
     <div class="bar-container profile">
       <?php if ($session->hasSession()) : ?>
         <?php $cliente = $session->getCurrentClient(); ?>
+        <a class="link" href=" <?= SERVER_HOST . $this->getBasePath() . '/reservas' ?>">Reservas</a>
         <a class="link" href=" <?= SERVER_HOST . $this->getBasePath() . '/perfil' ?>"><?= $cliente->getNombres() . ' ' . $cliente->getPaterno() ?></a>
-        <a class="link" href="<?= SERVER_HOST . $this->getBasePath() . '/logout' ?>">Cerrar sesion</a>
       <?php else : ?>
         <a class="link" class="link" href=" <?= SERVER_HOST . $this->getBasePath() . '/register' ?>">Registrate</a>
         <a class="link" class="link" href=" <?= SERVER_HOST . $this->getBasePath() . '/login' ?>">Log in</a>

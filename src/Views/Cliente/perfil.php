@@ -31,7 +31,8 @@
           <span>Nacionalidad</span><span><?= $cliente->getNacionalidad() ?></span>
         </div>
         <div class="row-title">
-          <span><a class="btn-succes" href="<?= SERVER_HOST . $this->getBasePath() . '/perfil/edit' ?>" class="btn">Editar <i class="fas fa-edit"></i></a></span>
+          <span><a class="btn-succes" href="<?= SERVER_HOST . $this->getBasePath() . '/perfil/edit' ?>">Editar <i class="fas fa-edit"></i></a></span>
+          <span><a class="btn-danger" href="<?= SERVER_HOST . $this->getBasePath() . '/logout' ?>">Cerrar sesion <i class="fas fa-right-from-bracket"></i></a></span>
         </div>
       </div>
     </div>

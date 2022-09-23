@@ -5,6 +5,7 @@ use Controllers\HabitacionController;
 use Controllers\HomeController;
 use Controllers\LoginController;
 use Controllers\PerfilController;
+use Controllers\ReservaController;
 use Http\App;
 
 require __DIR__ . '/../app/settings.php';
@@ -24,7 +25,7 @@ $app->get('/register', [LoginController::class, 'register']);
 $app->post('/register', [LoginController::class, 'save']);
 
 $app->get('/habitaciones', [HabitacionController::class, 'getAll']);
-$app->get('/clientes', [ClienteController::class, 'getAll']);
+$app->get('/reservas', [ReservaController::class, 'getAll']);
 
 $app->get('/perfil', [PerfilController::class, 'perfil']);
 $app->get('/perfil/edit', [PerfilController::class, 'edit']);
