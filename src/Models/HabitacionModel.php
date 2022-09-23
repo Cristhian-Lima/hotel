@@ -32,4 +32,9 @@ class HabitacionModel extends Model implements CrudInterface
 
     return $resultOfQuery->fetchObject(Habitacion::class);
   }
+
+  public function getFrom($id): array
+  {
+    return [];
+  }
 }

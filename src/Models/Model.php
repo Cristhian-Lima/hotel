@@ -21,6 +21,14 @@ class Model
     $this->database = new Database();
   }
 
+  protected function query(string $query, array $params = [])
+  {
+    $connection = $this->database->connect();
+    $prepare = $connection->prepare($query);
+    $prepare->execute($params);
+    return $prepare;
+  }
+
   protected function selectAllFrom(string $tableName): PDOStatement
   {
     $connection = $this->database->connect();

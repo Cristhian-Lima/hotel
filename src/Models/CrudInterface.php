@@ -24,4 +24,11 @@ interface CrudInterface
    * @return ?Entitie | bool
    */
   public function get($id): ?Entitie;
+
+  /**
+   * OBtiene los datos de aqcuerdo a un ID
+   *
+   * @return array
+   */
+  public function getFrom($id): array;
 }

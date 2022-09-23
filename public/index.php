@@ -26,6 +26,10 @@ $app->post('/register', [LoginController::class, 'save']);
 
 $app->get('/habitaciones', [HabitacionController::class, 'getAll']);
 $app->get('/reservas', [ReservaController::class, 'getAll']);
+$app->get('/reservas/registrar/{id}', [ReservaController::class, 'registrar']);
+$app->post('/reservas/registrar', [ReservaController::class, 'registrarConfirm']);
+$app->get('/reservas/eliminar/{id}', [ReservaController::class, 'eliminar']);
+$app->post('/reservas/eliminar/{id}', [ReservaController::class, 'eliminarConfirm']);
 
 $app->get('/perfil', [PerfilController::class, 'perfil']);
 $app->get('/perfil/edit', [PerfilController::class, 'edit']);

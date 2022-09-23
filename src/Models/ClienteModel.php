@@ -32,6 +32,11 @@ class ClienteModel extends Model implements CrudInterface
     return $resultOfQuery->fetchObject(Cliente::class);
   }
 
+  public function getFrom($id): array
+  {
+    return [];
+  }
+
   public function update(Cliente $cliente): bool
   {
     $connection = $this->database->connect();

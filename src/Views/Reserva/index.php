@@ -17,25 +17,33 @@
         <table class="table">
           <thead class="table-head">
             <tr>
-              <th>Codigo</th>
-              <th>Cod. Habitacion</th>
-              <th>Cod. Cliente</th>
+              <th>Nº Habitacion</th>
+              <th>Piso</th>
+              <th>Tipo</th>
               <th>Fecha Inicio</th>
               <th>Fecha Final</th>
               <th>Fecha reserva</th>
+              <th></th>
             </tr>
           </thead>
           <tbody class="table-body">
-            <?php foreach ($this->get('reservas') as $reserva) : ?>
+            <?php if (count($this->get('reservas')) > 0) : ?>
+              <?php foreach ($this->get('reservas') as $reserva) : ?>
+                <tr>
+                  <td><?= $reserva->NUMERO ?></td>
+                  <td><?= $reserva->PISO ?></td>
+                  <td><?= $reserva->TIPO_HABITACION ?></td>
+                  <td><?= $reserva->getFechaInicio() ?></td>
+                  <td><?= $reserva->getFechaFinal() ?></td>
+                  <td><?= $reserva->getFecha() ?></td>
+                  <td><a href=" <?= SERVER_HOST . $this->getBasePath() . '/reservas/eliminar/' . $reserva->getId() ?>" class="btn-danger"><i class="fas fa-trash"></i></a></td>
+                </tr>
+              <?php endforeach ?>
+            <?php else : ?>
               <tr>
-                <td><?= $reserva->getId() ?></td>
-                <td><?= $reserva->getCodHabitacion() ?></td>
-                <td><?= $reserva->getCodCliente() ?></td>
-                <td><?= $reserva->getFechaInicio() ?></td>
-                <td><?= $reserva->getFechaFinal() ?></td>
-                <td><?= $reserva->getFecha() ?></td>
+                <td colspan="6">Sin reservaciones</td>
               </tr>
-            <?php endforeach ?>
+            <?php endif ?>
           </tbody>
         </table>
       </div>
